@@ -291,8 +291,7 @@ export function FooterBar(props: FooterBarProps): JSX.Element | null {
     logger.logTraceUseEffect('FOOTER-TABS - isMapFullScreen', isMapFullScreen, isCollapsed);
 
     if (isMapFullScreen && tabsContainerRef.current && !isCollapsed) {
-      const tabHeight = memoTabHeight[footerPanelResizeValue];
-      tabsContainerRef.current.style.height = `${tabHeight}px`;
+      tabsContainerRef.current.style.height = `${footerPanelResizeValue}%`;
     }
 
     if (!isMapFullScreen && tabsContainerRef.current) {

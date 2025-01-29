@@ -32,5 +32,8 @@ export const getSxClasses = (theme: Theme): SxStyles => ({
       margin: '0.5rem',
       minHeight: 0,
     },
+    '[role="tabpanel"], [role="tabpanel"] > .MuiBox-root > .MuiBox-root, .responsive-layout-left-main, .responsive-layout-right-main': {
+      height: '100%',
+    },
   },
 });

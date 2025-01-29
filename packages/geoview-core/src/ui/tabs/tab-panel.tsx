@@ -28,7 +28,7 @@ export const TabPanel = forwardRef((props: TypeTabPanelProps, ref) => {
   const { children, value, index, id, containerType, tabId, ...other } = props;
 
   return (
-    <Box role="tabpanel" hidden={value !== index} id={id} aria-labelledby={`${tabId} layers`} {...other} ref={ref}>
+    <Box role="tabpanel" hidden={value !== index} id={id} className="tab-panel" aria-labelledby={`${tabId} layers`} {...other} ref={ref}>
       <FocusTrapContainer id={tabId} containerType={containerType}>
         {children}
       </FocusTrapContainer>

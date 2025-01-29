@@ -31,7 +31,6 @@ interface UseFooterPanelHeightReturnType {
 
 // Constants outside component to prevent recreating every render
 const DEFAULT_HEIGHT = 600;
-const MOBILE_OFFSET = 200;
 const PADDING_BOTTOM = '24px';
 const TABLE_HEIGHT_OFFSET = 100;
 
@@ -82,16 +81,6 @@ export function useFooterPanelHeight({ footerPanelTab = 'default' }: UseFooterPa
     Object.assign(panel.style, defaultPanelStyle);
   }, []);
 
-  const calculateLeftPanelHeight = useCallback(
-    (footerBarHeight: number): number => {
-      if (tabGroup === CV_DEFAULT_APPBAR_CORE.DATA_TABLE || tabGroup === CV_DEFAULT_APPBAR_CORE.LAYERS) {
-        return window.screen.height - MOBILE_OFFSET;
-      }
-      return (window.screen.height * footerPanelResizeValue) / 100 - panelTitleRefHeight.current - footerBarHeight - 10;
-    },
-    [footerPanelResizeValue, tabGroup]
-  );
-
   useEffect(() => {
     logger.logTraceUseEffect('USE-FOOTER-PANEL-HEIGHT', footerPanelResizeValue, isMapFullScreen);
 
@@ -100,24 +89,32 @@ export function useFooterPanelHeight({ footerPanelTab = 'default' }: UseFooterPa
     const shouldUpdateFullscreen = isMapFullScreen && (activeFooterBarTabId === footerPanelTab || footerPanelTab === 'default');
 
     if (shouldUpdateFullscreen) {
+
       const tabsContainer = document.getElementById(`${mapId}-tabsContainer`);
       const footerBarHeight = tabsContainer?.firstElementChild?.firstElementChild?.clientHeight ?? 0;
-      const leftPanelHeight = calculateLeftPanelHeight(footerBarHeight);
+      const tabPanel = tabsContainer?.querySelector('#tabPanel') as HTMLElement;
+      const panelGridRow = leftPanelRef.current?.parentElement;
 
-      updatePanelHeight(leftPanelRef.current, `${leftPanelHeight}px`);
+      if ( tabPanel ) {
+        tabPanel.style.height = `calc(100% - ${footerBarHeight}px)`;
+      }
+
+      if ( panelGridRow ) {
+        panelGridRow.style.height = `calc(100% - ${panelTitleRefHeight.current}px)`;
+      }
+
+      const leftPanelHeight = '100%';
+      updatePanelHeight(leftPanelRef.current, `${leftPanelHeight}`);
       leftPanelRef.current.style.paddingBottom = PADDING_BOTTOM;
 
       // Handle right panel updates
       const rightPanel = rightPanelRef.current?.firstElementChild as HTMLElement;
       if (rightPanel) {
         if (activeFooterBarTabId === TABS.DATA_TABLE || tabGroup === CV_DEFAULT_APPBAR_CORE.DATA_TABLE) {
-          updatePanelHeight(rightPanel, `${leftPanelHeight}px`);
-          setTableHeight(`${leftPanelHeight - TABLE_HEIGHT_OFFSET}px`);
-        } else if (activeFooterBarTabId === TABS.GEO_CHART) {
-          updatePanelHeight(rightPanel, `${leftPanelHeight}px`);
-        } else {
-          updatePanelHeight(rightPanel, `${leftPanelHeight}px`);
+          setTableHeight(`calc(100% - ${TABLE_HEIGHT_OFFSET}px )`);
         }
+
+        updatePanelHeight(rightPanel, `${leftPanelHeight}`);
       }
     } else {
       // Non-fullscreen updates
@@ -141,7 +138,6 @@ export function useFooterPanelHeight({ footerPanelTab = 'default' }: UseFooterPa
     arrayOfLayerData,
     allFeaturesLayerData,
     tabGroup,
-    calculateLeftPanelHeight,
     updatePanelHeight,
   ]);
 
