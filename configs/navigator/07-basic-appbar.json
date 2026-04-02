@@ -1,0 +1,88 @@
+{
+    "map": {
+        "interaction": "dynamic",
+        "viewSettings": {
+            "projection": 3857
+        },
+        "basemapOptions": {
+            "basemapId": "transport",
+            "shaded": true,
+            "labeled": true
+        },
+        "overlayObjects": {
+            "pointMarkers": {
+                "group1": [
+                    {
+                        "id": "1",
+                        "coordinate": [
+                            -100,
+                            60
+                        ],
+                        "color": "blue",
+                        "opacity": 0.5
+                    },
+                    {
+                        "id": "2",
+                        "coordinate": [
+                            -80,
+                            65
+                        ],
+                        "color": "rgb(0, 226, 0)"
+                    },
+                    {
+                        "id": "3",
+                        "coordinate": [
+                            -115,
+                            66
+                        ],
+                        "color": "#C52022"
+                    }
+                ]
+            }
+        },
+        "listOfGeoviewLayerConfig": [
+            {
+                "geoviewLayerId": "airborne_radioactivity",
+                "geoviewLayerName": "Airborne Radioactivity",
+                "metadataAccessPath": "https://maps-cartes.services.geo.ca/server_serveur/rest/services/HC/airborne_radioactivity_en/MapServer",
+                "geoviewLayerType": "esriDynamic",
+                "listOfLayerEntryConfig": [
+                    {
+                        "layerId": "1"
+                    }
+                ]
+            }
+        ]
+    },
+    "theme": "geo.ca",
+    "components": [],
+    "footerBar": {
+        "tabs": {
+            "core": [
+                "legend",
+                "layers",
+                "details",
+                "data-table"
+            ]
+        },
+        "selectedTab": "data-table",
+        "selectedDataTableLayerPath": "airborne_radioactivity/1"
+    },
+    "corePackages": [],
+    "externalPackages": [],
+    "appBar": {
+        "tabs": {
+            "core": [
+                "geolocator",
+                "export",
+                "legend",
+                "layers",
+                "details",
+                "data-table"
+            ]
+        }
+    },
+    "globalSettings": {
+        "canRemoveSublayers": false
+    }
+}
